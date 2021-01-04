@@ -1,0 +1,117 @@
+<body>
+<!-- /* <links> */ -->
+<link href="https://fonts.googleapis.com/css2?family=Chilanka&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+<!-- /* <links> */ -->
+<!-- /* By: ThatGeekyWeeb */ -->
+<!DOCTYPE html>
+  <center class="header-b">Client Code Input</center>
+<p>
+  <button id="stbutton" onclick="myFunction()">Start</button>
+</p>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+const scopes = 'user-read-private%20user-read-email%20user-library-read%20playlist-modify-private%20user-read-currently-playing%20user-modify-playback-state%20playlist-read-collaborative%20user-read-playback-state%20streaming%20playlist-read-private';
+  
+function myFunction() {
+  var CLID; 
+  var CLSEC;
+  var checkID = getCookie('CLID');
+  var checkSEC = getCookie('CLSEC');
+  if ( checkID != "" && checkID != undefined && checkSEC != "" && checkSEC != undefined ) {
+  	console.log('Using Cookie');
+    console.log(getCookie('CLID'));
+    console.log(getCookie('CLSEC'));
+    sessionStorage.setItem('CLID', getCookie('CLID'));
+    sessionStorage.setItem('CLSEC', getCookie('CLSEC'));
+    window.CLID = sessionStorage.getItem('CLID');
+    window.CLSEC = sessionStorage.getItem('CLSEC');
+    window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://' + window.location.hostname + '/REKEY/callback/' + '&show_dialog=false');
+  } else {
+  	console.log('Request IDs');
+  	swal("Client ID", {
+      content: "input",
+      closeOnEsc: false,
+      closeOnClickOutside: false,
+    })
+    .then((value) => {
+      sessionStorage.setItem('CLID', `${value}`);
+      window.CLID = sessionStorage.getItem('CLID');
+      setCookie('CLID', window.CLID, 60);
+      swal("Client Secret", {
+      	content: "input",
+      	closeOnEsc: false,
+      	closeOnClickOutside: false,
+    	})
+    	.then((value) => {
+      	sessionStorage.setItem('CLSEC', `${value}`);
+       	window.CLSEC = sessionStorage.getItem('CLSEC');
+       	setCookie('CLSEC', window.CLSEC, 60);
+        console.log('ID IS: ' + window.CLID + '\n' + 'SEC IS: ' + window.CLSEC);
+    		window.location.replace('https://accounts.spotify.com/authorize?response_type=code&client_id=' + window.CLID + '&scope=' + scopes + '&redirect_uri=https://' + window.location.hostname + '/REKEY/callback/' + '&show_dialog=false');
+    	});
+    });
+  }
+}
+var checkID = getCookie('CLID');
+var checkSEC = getCookie('CLSEC');
+if ( checkID != "" && checkID != undefined && checkSEC != "" && checkSEC != undefined ) {
+  myFunction();
+}
+</script>
+<style>
+body {
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  background: url("https://cdn.discordapp.com/attachments/739070489514868767/739724355029958686/clouds.png");
+}
+.header-b {
+    padding-top: 20px;
+    position: relative;
+    font-size: 50px;
+    font-family: 'Chilanka', bold;
+}
+label{
+  font-family: 'Chilanka', bold;
+}
+div{
+  text-align: center;
+}
+.SEC{
+  margin-right: 25px;
+}
+p{
+  text-align: center;
+  margin: auto;
+}
+button{
+  background-color: #ffc2ae;
+    border-radius: 3px;
+    border-width: 0.9px;
+    border-color: rgb(118, 118, 118);
+}
+</style>
+</body>
