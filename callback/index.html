@@ -1,5 +1,7 @@
 <body>
 <a href="" id="a">Click to save AUTHKEYS</a>
+<div id="authkey">
+</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -49,6 +51,6 @@ function auth(){
 }
 auth();
 window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since there ugly
-document.body.innerText= 'REKEY=' + sessionStorage.getItem('refresh_token') + '\nCLID=' + CLID + '\nCLSEC' + CLSEC; 
+document.getElementById("authkey").innerText= 'REKEY=' + sessionStorage.getItem('refresh_token') + '\nCLID=' + CLID + '\nCLSEC' + CLSEC; 
 download('REKEY=' + sessionStorage.getItem('refresh_token') + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC, 'authkeys', 'text/plain')
 </script>
