@@ -3,16 +3,17 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+function download(text, name, type) {
+  var a = document.getElementById("a");
+  var file = new Blob([text], {type: type});
+  a.href = URL.createObjectURL(file);
+  a.download = name;
+}
 var urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.get('code'));
 var code = urlParams.get('code');
 const CLID = sessionStorage.getItem('CLID');
 const CLSEC = sessionStorage.getItem('CLSEC');
-function millisToMinutesAndSeconds(millis) {
-  var minutes = Math.floor(millis / 60000);
-  var seconds = ((millis % 60000) / 1000).toFixed(0);
-  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-}
 $.ajax({
             type: 'POST',
             url: "https://accounts.spotify.com/api/token",
@@ -40,12 +41,13 @@ function auth(){
 			    sessionStorage.setItem('access_token', response.access_token);
     	      },
               error: function (xhr, ajaxOptions, thrownError) {
-                location.reload();
+                window.location.replace('https://www.thatgeekyweeb.is-dummy-thi.cc/REKEY');
               }
 	});
 	window.access_token = sessionStorage.getItem('access_token');
 }
 auth();
 window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since there ugly
-document.body.innerText= 'REKEY=' + sessionStorage.getItem('refresh_token');
+document.body.innerText= 'REKEY=' + sessionStorage.getItem('refresh_token') + '\nCLID=' + CLID + '\nCLSEC' + CLSEC; 
+download('REKEY=' + sessionStorage.getItem('refresh_token') + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC, 'authkeys', 'text/plain')
 </script>
