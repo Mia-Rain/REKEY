@@ -17,21 +17,25 @@ console.log(urlParams.get('code'));
 var code = urlParams.get('code');
 const CLID = sessionStorage.getItem('CLID');
 const CLSEC = sessionStorage.getItem('CLSEC');
-$.ajax({
-            type: 'POST',
-            url: "https://accounts.spotify.com/api/token",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-            dataType: 'json',
-            data: { 'client_id': CLID, 'client_secret': CLSEC, 'redirect_uri': 'http://www.thatgeekyweeb.is-dummy-thi.cc/REKEY/callback/', code, 'grant_type': "authorization_code" },
-            success: function (response, data) {
-                	console.log(response);
-			console.log(data);
-                	sessionStorage.setItem('refresh_token', response.refresh_token);
-	    },
-	    error: function () {
-		     console.log("PLEASE GO TO https://www.thatgeekyweeb.is-dummy-thi.cc/REKEY/");
-	    }
+/*TOKEN GEN*/ $.ajax({
+  type: "POST",
+  url: "https://accounts.spotify.com/api/token",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  contentType: "application/x-www-form-urlencoded; charset=utf-8",
+ //  crossDomain: true, // using this header only causes problems.. 
+  dataType: "json",
+  data: {
+    client_id: CLID,
+    client_secret: CLSEC,
+    redirect_uri: "https://www.thatgeekyweeb.is-dummy-thi.cc/REKEY/callback/",
+    code,
+    grant_type: "authorization_code",
+  },
+  success: function (response, data) {
+    console.log(response);
+    console.log(data);
+    sessionStorage.setItem("refresh_token", response.refresh_token);
+  },
 });
 window.refresh_token = sessionStorage.getItem('refresh_token');
 function auth(){
