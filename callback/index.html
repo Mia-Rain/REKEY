@@ -79,5 +79,5 @@ var authT = {
 //
 authT.access_token;
 document.getElementById("authkey").innerText= 'REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC; 
-download('REKEY=' + auhT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC, 'authkeys', 'text/plain')
+download('REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC, 'authkeys', 'text/plain')
 </script>
