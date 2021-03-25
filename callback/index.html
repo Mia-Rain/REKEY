@@ -14,9 +14,10 @@ function download(text, name, type) {
 }
 var urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.get('code'));
-var code = urlParams.get('code');
+const code = urlParams.get('code');
 const CLID = sessionStorage.getItem('CLID');
 const CLSEC = sessionStorage.getItem('CLSEC');
+
 /*TOKEN GEN*/ $.ajax({
   type: "POST",
   url: "https://accounts.spotify.com/api/token",
@@ -38,23 +39,45 @@ const CLSEC = sessionStorage.getItem('CLSEC');
   },
 });
 window.refresh_token = sessionStorage.getItem('refresh_token');
-function auth(){
-	$.ajax({
-  	      type: 'POST',
-    	      url: 'https://accounts.spotify.com/api/token',
-      	      contentType: 'application/x-www-form-urlencoded',
-              data: { 'client_id': sessionStorage.getItem('CLID'), 'client_secret': sessionStorage.getItem('CLSEC'), 'grant_type': 'refresh_token', 'refresh_token': window.refresh_token },
-      	      success: function (response, data) {
-			    sessionStorage.setItem('access_token', response.access_token);
-    	      },
-              error: function (xhr, ajaxOptions, thrownError) {
-                console.log("PLEASE GO TO https://www.thatgeekyweeb.is-dummy-thi.cc/REKEY/");
-              }
-	});
-	window.access_token = sessionStorage.getItem('access_token');
-}
-auth();
-window.history.replaceState(null, null, window.location.pathname); // Emptys the URL params since there ugly
-document.getElementById("authkey").innerText= 'REKEY=' + sessionStorage.getItem('refresh_token') + '\nCLID=' + CLID + '\nCLSEC' + CLSEC; 
-download('REKEY=' + sessionStorage.getItem('refresh_token') + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC, 'authkeys', 'text/plain')
+var authT = {
+  get refresh_token() {
+    return sessionStorage.getItem("refresh_token");
+  },
+  get access_token() {
+  /*  while (true) {
+      try {
+        return this._access_token();
+      } catch (err) {
+        continue;
+      }
+    }
+  },
+  _access_token() { */// I have to disable DB's snippet since it causes more errors
+    $.ajax({
+      type: "POST",
+      url: "https://accounts.spotify.com/api/token",
+      contentType: "application/x-www-form-urlencoded",
+      //crossDomain: true,
+      dataType: "json",
+      data: {
+        client_id: sessionStorage.getItem("CLID"),
+        client_secret: sessionStorage.getItem("CLSEC"),
+        grant_type: "refresh_token",
+        refresh_token: authT.refresh_token,
+      },
+      success: function (response, data) {
+        sessionStorage.setItem("access_token", response.access_token);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        //throw "error in auth()";
+        console.log("error in auth()");
+      },
+    });
+    return sessionStorage.getItem("access_token");
+  },
+};
+//
+authT.access_token;
+document.getElementById("authkey").innerText= 'REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC; 
+download('REKEY=' + auhT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC, 'authkeys', 'text/plain')
 </script>
