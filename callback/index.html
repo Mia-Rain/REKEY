@@ -78,8 +78,10 @@ var authT = {
 };
 //
 authT.access_token;
-while(authT.refresh_token == "null" || authT.refresh_token === null) { 
-  document.getElementById("authkey").innerText= 'REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC; 
-}
+var intVal = setInterval(function () {
+  if(authT.refresh_token == "null" || authT.refresh_token === null) {
+    document.getElementById("authkey").innerText= 'REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC; 
+  } else clearInterval(intVal);
+}, 3000);
 download('REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC, 'authkeys', 'text/plain')
 </script>
