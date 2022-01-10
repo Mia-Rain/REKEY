@@ -80,8 +80,8 @@ var authT = {
 authT.access_token;
 var intVal = setInterval(function () {
   if(authT.refresh_token == "null" || authT.refresh_token === null||document.getElementById("authkey").innerText == '') {
-    document.getElementById("authkey").innerText= 'REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC; 
+    document.getElementById("authkey").innerText= 'REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC;
+    download('REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC, 'authkeys', 'text/plain')
   } else clearInterval(intVal);
 }, 3000);
-download('REKEY=' + authT.refresh_token + '\nCLID=' + CLID + '\nCLSEC=' + CLSEC, 'authkeys', 'text/plain')
 </script>
