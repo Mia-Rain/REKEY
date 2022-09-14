@@ -71,6 +71,7 @@ var authT = {
       error: function (xhr, ajaxOptions, thrownError) {
         //throw "error in auth()";
         console.log("error in auth()");
+        console.error(thrownError); // actually throw the error
       },
     });
     return sessionStorage.getItem("access_token");
