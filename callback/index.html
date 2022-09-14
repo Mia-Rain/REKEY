@@ -2,6 +2,7 @@
 <a href="" id="a">Click to save AUTHKEYS</a>
 <div id="authkey">
 </div>
+  <a href="https://mia-rain.github.io/REKEY/">Retry...</a>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -28,7 +29,7 @@ const CLSEC = sessionStorage.getItem('CLSEC');
   data: {
     client_id: CLID,
     client_secret: CLSEC,
-    redirect_uri: window.location.origin + window.location.pathname,
+    redirect_uri: window.location.origin + location.pathname.replace(/\/+$/, ""), // remove trailing slash
     code,
     grant_type: "authorization_code",
   },
